@@ -22,7 +22,7 @@ var TasksList = React.createClass({
         <tr key={item.id} className={item.current ? 'info' : null}>
           <th>{item.id}</th>
           <th>{item.task}</th>
-          <th>25:00</th>
+          <th>1:00</th>
           <th>Pomodoro</th>
           <th className="text-right">
             <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span>
@@ -55,7 +55,10 @@ var TasksList = React.createClass({
 var Timer = React.createClass({
   getInitialState: function() {
     return {
-      timeRemaining: 1500,
+      timeRemaining: {
+        mins: 25,
+        secs: 0
+      },
       tasksList: [],
       task: ''
     };
@@ -88,7 +91,22 @@ var Timer = React.createClass({
     }
   },
   tick: function() {
-    this.setState({timeRemaining: this.state.timeRemaining - 1});
+    let newTimeRemaining = {};
+    if (this.state.timeRemaining.secs > 0) {
+      newTimeRemaining.mins = this.state.timeRemaining.mins;
+      newTimeRemaining.secs = this.state.timeRemaining.secs -  1;
+      if (newTimeRemaining.secs < 10) {
+        newTimeRemaining.secs = '0' + newTimeRemaining.secs;
+      }
+    } else {
+      newTimeRemaining.mins = this.state.timeRemaining.mins - 1;
+      if (this.state.timeRemaining.secs === 0) {
+        newTimeRemaining.secs = 59;
+      } else {
+        newTimeRemaining.secs = this.state.timeRemaining.secs -  1;
+      }
+    }
+    this.setState({timeRemaining: newTimeRemaining});
   },
   start: function() {
     this.interval = setInterval(this.tick, 1000);
@@ -107,7 +125,7 @@ var Timer = React.createClass({
     return (
       <div>
         <div>
-          <div className="time">{Math.floor(this.state.timeRemaining / 60)}<small>min</small></div>
+          <div className="time">{this.state.timeRemaining.mins}:{this.state.timeRemaining.secs}</div>
           <div className="controls">
             <button type="button" className="btn btn-default btn-lg" onClick={this.start}>Start</button>
             <button type="button" className="btn btn-default btn-lg" onClick={this.pause}>Pause</button>
