@@ -163,13 +163,13 @@
 	    if (this.state.tasksList[0]) {
 	      this.state.tasksList[0].current = false;
 	    }
-	    var newItem = {
+	    var newItemArray = [{
 	      id: this.state.tasksList.length + 1,
 	      task: this.state.task,
 	      current: true,
 	      createdOn: Date.now()
-	    };
-	    var nextItems = Array.concat(newItem, this.state.tasksList);
+	    }];
+	    var nextItems = newItemArray.concat(this.state.tasksList);
 	    var nextText = '';
 	    this.setState({
 	      tasksList: nextItems,
@@ -340,7 +340,7 @@
 	            { className: 'input-group-btn' },
 	            React.createElement(
 	              'button',
-	              { className: 'btn btn-default', type: 'button' },
+	              { className: 'btn btn-default', type: 'submit' },
 	              'Add #' + (this.state.tasksList.length + 1)
 	            )
 	          )
