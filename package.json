@@ -1,14 +1,14 @@
 {
-  "name": "pomoract",
+  "name": "ketchup",
   "version": "0.0.1",
   "description": "A pomodoro timer",
-  "main": "index.js",
+  "main": "app/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sirodoht/pomoract.git"
+    "url": "git+https://github.com/sirodoht/ketchup.git"
   },
   "keywords": [
     "pomodoro"
@@ -16,9 +16,9 @@
   "author": "sirodoht",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sirodoht/pomoract/issues"
+    "url": "https://github.com/sirodoht/ketchup/issues"
   },
-  "homepage": "https://github.com/sirodoht/pomoract#readme",
+  "homepage": "https://github.com/sirodoht/ketchup#readme",
   "dependencies": {
     "babel-preset-react": "6.3.13",
     "react": "0.14.6",
