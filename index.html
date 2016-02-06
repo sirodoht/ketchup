@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Ketchup</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="container text-center">
+    <div class="time">
+      25:00
+    </div>
+    <div class="controls">
+      <button type="button" name="start" class="btn btn-default btn-lg">Start</button>
+      <button type="button" name="pause" class="btn btn-default btn-lg">Pause</button>
+      <button type="button" name="stop" class="btn btn-default btn-lg">Stop</button>
+    </div>
+    <div class="tasks">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Add new task">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button">Add</button>
+        </span>
+      </div>
+    </div>
+    <div class="summary">
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">Pomodoros</h3>
+            </div>
+            <div class="panel-body">
+              2
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">Work time</h3>
+            </div>
+            <div class="panel-body">
+              50:00
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">Break time</h3>
+            </div>
+            <div class="panel-body">
+              10:00
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">Breaks</h3>
+            </div>
+            <div class="panel-body">
+              1
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="list">
+      <table class="table table-stripped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Task</th>
+            <th>Duration</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>2</th>
+            <th>fix ketchup timer</th>
+            <th>25:00</th>
+            <th>Pomodoro</th>
+          </tr>
+          <tr>
+            <th>*</th>
+            <th>break</th>
+            <th>5:00</th>
+            <th>Break</th>
+          </tr>
+          <tr>
+            <th>1</th>
+            <th>create ketchup timer</th>
+            <th>25:00</th>
+            <th>Pomodoro</th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="bundle.js"></script>
+</body>
+
+</html>
