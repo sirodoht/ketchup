@@ -82,7 +82,7 @@
 	        React.createElement(
 	          'th',
 	          null,
-	          '25:00'
+	          '1:00'
 	        ),
 	        React.createElement(
 	          'th',
@@ -147,7 +147,10 @@
 
 	  getInitialState: function () {
 	    return {
-	      timeRemaining: 1500,
+	      timeRemaining: {
+	        mins: 25,
+	        secs: 0
+	      },
 	      tasksList: [],
 	      task: ''
 	    };
@@ -180,7 +183,22 @@
 	    }
 	  },
 	  tick: function () {
-	    this.setState({ timeRemaining: this.state.timeRemaining - 1 });
+	    let newTimeRemaining = {};
+	    if (this.state.timeRemaining.secs > 0) {
+	      newTimeRemaining.mins = this.state.timeRemaining.mins;
+	      newTimeRemaining.secs = this.state.timeRemaining.secs - 1;
+	      if (newTimeRemaining.secs < 10) {
+	        newTimeRemaining.secs = '0' + newTimeRemaining.secs;
+	      }
+	    } else {
+	      newTimeRemaining.mins = this.state.timeRemaining.mins - 1;
+	      if (this.state.timeRemaining.secs === 0) {
+	        newTimeRemaining.secs = 59;
+	      } else {
+	        newTimeRemaining.secs = this.state.timeRemaining.secs - 1;
+	      }
+	    }
+	    this.setState({ timeRemaining: newTimeRemaining });
 	  },
 	  start: function () {
 	    this.interval = setInterval(this.tick, 1000);
@@ -205,12 +223,9 @@
 	        React.createElement(
 	          'div',
 	          { className: 'time' },
-	          Math.floor(this.state.timeRemaining / 60),
-	          React.createElement(
-	            'small',
-	            null,
-	            'min'
-	          )
+	          this.state.timeRemaining.mins,
+	          ':',
+	          this.state.timeRemaining.secs
 	        ),
 	        React.createElement(
 	          'div',
