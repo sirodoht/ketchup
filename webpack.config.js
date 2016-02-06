@@ -1,18 +1,9 @@
-var webpack = require('webpack');
 var path = require('path');
 
 module.exports = {
-  // context:  + '/app',
-  // entry: {
-  //   jsx: path.join(__dirname, 'main.jsx'),
-  //   html: path.join(__dirname, 'index.html'),
-  //   vendor: ['react']
-  // },
-  // entry: path.join(__dirname, './main.js'),
-  entry: './main.jsx',
+  entry: path.resolve(__dirname, 'app/main.js'),
   output: {
-    path: __dirname,
-    // path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js'
   },
   module: {
@@ -24,7 +15,4 @@ module.exports = {
       },
     ],
   },
-  // resolve: {
-  //   extensions: ['', '.js', '.jsx']
-  // },
 };
