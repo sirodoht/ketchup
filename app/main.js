@@ -71,13 +71,13 @@ var Timer = React.createClass({
     if (this.state.tasksList[0]) {
       this.state.tasksList[0].current = false;
     }
-    var newItem = {
+    var newItemArray = [{
       id: this.state.tasksList.length + 1,
       task: this.state.task,
       current: true,
       createdOn: Date.now()
-    };
-    var nextItems = Array.concat(newItem, this.state.tasksList);
+    }];
+    var nextItems = newItemArray.concat(this.state.tasksList);
     var nextText = '';
     this.setState({
       tasksList: nextItems,
