@@ -162,7 +162,7 @@ var Timer = React.createClass({
           <div className="input-group">
             <input type="text" className="form-control" placeholder="Add new task" onChange={this.onChange} value={this.state.task} />
             <span className="input-group-btn">
-              <button className="btn btn-default" type="button">{'Add #' + (this.state.tasksList.length + 1)}</button>
+              <button className="btn btn-default" type="submit">{'Add #' + (this.state.tasksList.length + 1)}</button>
             </span>
           </div>
         </form>
