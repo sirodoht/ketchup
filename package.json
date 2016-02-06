@@ -26,7 +26,10 @@
   },
   "devDependencies": {
     "babel-core": "6.4.0",
+    "babel-eslint": "4.1.8",
     "babel-loader": "6.2.1",
+    "eslint": "1.10.3",
+    "eslint-plugin-react": "3.16.1",
     "webpack": "1.12.11"
   }
 }

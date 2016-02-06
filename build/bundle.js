@@ -47,11 +47,311 @@
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(158);
 
-	ReactDOM.render(React.createElement(
-	  'h1',
-	  null,
-	  'Hello, world!'
-	), document.getElementById('example'));
+	// var Break = React.createClass({
+	//   render: function() {
+	//     return (
+	//       <tr>
+	//         <th>*</th>
+	//         <th>Break</th>
+	//         <th>5:00</th>
+	//         <th>Break</th>
+	//         <th><span className="glyphicon glyphicon-trash" aria-hidden="true"></span></th>
+	//       </tr>
+	//     );
+	//   }
+	// });
+
+	var TasksList = React.createClass({
+	  displayName: 'TasksList',
+
+	  render: function () {
+	    var createItem = function (item) {
+	      return React.createElement(
+	        'tr',
+	        { key: item.id, className: item.current ? 'info' : null },
+	        React.createElement(
+	          'th',
+	          null,
+	          item.id
+	        ),
+	        React.createElement(
+	          'th',
+	          null,
+	          item.task
+	        ),
+	        React.createElement(
+	          'th',
+	          null,
+	          '25:00'
+	        ),
+	        React.createElement(
+	          'th',
+	          null,
+	          'Pomodoro'
+	        ),
+	        React.createElement(
+	          'th',
+	          { className: 'text-right' },
+	          React.createElement('span', { className: 'glyphicon glyphicon-pencil', 'aria-hidden': 'true' }),
+	          React.createElement('span', { className: 'glyphicon glyphicon-trash', 'aria-hidden': 'true' })
+	        )
+	      );
+	    };
+	    return React.createElement(
+	      'div',
+	      { className: 'list' },
+	      React.createElement(
+	        'table',
+	        { className: 'table table-stripped' },
+	        React.createElement(
+	          'thead',
+	          null,
+	          React.createElement(
+	            'tr',
+	            null,
+	            React.createElement(
+	              'th',
+	              null,
+	              '#'
+	            ),
+	            React.createElement(
+	              'th',
+	              null,
+	              'Task'
+	            ),
+	            React.createElement(
+	              'th',
+	              null,
+	              'Duration'
+	            ),
+	            React.createElement(
+	              'th',
+	              null,
+	              'Type'
+	            ),
+	            React.createElement('th', null)
+	          )
+	        ),
+	        React.createElement(
+	          'tbody',
+	          null,
+	          this.props.tasksList.map(createItem)
+	        )
+	      )
+	    );
+	  }
+	});
+
+	var Timer = React.createClass({
+	  displayName: 'Timer',
+
+	  getInitialState: function () {
+	    return {
+	      timeRemaining: 1500,
+	      tasksList: [],
+	      task: ''
+	    };
+	  },
+	  onChange: function (e) {
+	    this.setState({ task: e.target.value });
+	  },
+	  handleSubmit: function (e) {
+	    e.preventDefault();
+	    if (this.state.task === '') {
+	      return;
+	    }
+	    if (this.state.tasksList[0]) {
+	      this.state.tasksList[0].current = false;
+	    }
+	    var newItem = {
+	      id: this.state.tasksList.length + 1,
+	      task: this.state.task,
+	      current: true,
+	      createdOn: Date.now()
+	    };
+	    var nextItems = Array.concat(newItem, this.state.tasksList);
+	    var nextText = '';
+	    this.setState({
+	      tasksList: nextItems,
+	      task: nextText
+	    });
+	    if (this.state.tasksList.length === 0) {
+	      this.start();
+	    }
+	  },
+	  tick: function () {
+	    this.setState({ timeRemaining: this.state.timeRemaining - 1 });
+	  },
+	  start: function () {
+	    this.interval = setInterval(this.tick, 1000);
+	  },
+	  pause: function () {
+	    clearInterval(this.interval);
+	  },
+	  next: function () {
+	    clearInterval(this.interval);
+	    this.setState({ timeRemaining: 1500 });
+	  },
+	  componentWillUnmount: function () {
+	    clearInterval(this.interval);
+	  },
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'div',
+	        null,
+	        React.createElement(
+	          'div',
+	          { className: 'time' },
+	          Math.floor(this.state.timeRemaining / 60),
+	          React.createElement(
+	            'small',
+	            null,
+	            'min'
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'controls' },
+	          React.createElement(
+	            'button',
+	            { type: 'button', className: 'btn btn-default btn-lg', onClick: this.start },
+	            'Start'
+	          ),
+	          React.createElement(
+	            'button',
+	            { type: 'button', className: 'btn btn-default btn-lg', onClick: this.pause },
+	            'Pause'
+	          ),
+	          React.createElement(
+	            'button',
+	            { type: 'button', className: 'btn btn-default btn-lg', onClick: this.next },
+	            'Next'
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'summary' },
+	        React.createElement(
+	          'div',
+	          { className: 'row' },
+	          React.createElement(
+	            'div',
+	            { className: 'col-sm-3' },
+	            React.createElement(
+	              'div',
+	              { className: 'panel panel-info' },
+	              React.createElement(
+	                'div',
+	                { className: 'panel-heading' },
+	                React.createElement(
+	                  'h3',
+	                  { className: 'panel-title' },
+	                  'Pomodoros'
+	                )
+	              ),
+	              React.createElement(
+	                'div',
+	                { className: 'panel-body' },
+	                '2'
+	              )
+	            )
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'col-sm-3' },
+	            React.createElement(
+	              'div',
+	              { className: 'panel panel-info' },
+	              React.createElement(
+	                'div',
+	                { className: 'panel-heading' },
+	                React.createElement(
+	                  'h3',
+	                  { className: 'panel-title' },
+	                  'Work time'
+	                )
+	              ),
+	              React.createElement(
+	                'div',
+	                { className: 'panel-body' },
+	                '50:00'
+	              )
+	            )
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'col-sm-3' },
+	            React.createElement(
+	              'div',
+	              { className: 'panel panel-info' },
+	              React.createElement(
+	                'div',
+	                { className: 'panel-heading' },
+	                React.createElement(
+	                  'h3',
+	                  { className: 'panel-title' },
+	                  'Break time'
+	                )
+	              ),
+	              React.createElement(
+	                'div',
+	                { className: 'panel-body' },
+	                '10:00'
+	              )
+	            )
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'col-sm-3' },
+	            React.createElement(
+	              'div',
+	              { className: 'panel panel-info' },
+	              React.createElement(
+	                'div',
+	                { className: 'panel-heading' },
+	                React.createElement(
+	                  'h3',
+	                  { className: 'panel-title' },
+	                  'Breaks'
+	                )
+	              ),
+	              React.createElement(
+	                'div',
+	                { className: 'panel-body' },
+	                '1'
+	              )
+	            )
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'form',
+	        { onSubmit: this.handleSubmit },
+	        React.createElement(
+	          'div',
+	          { className: 'input-group' },
+	          React.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Add new task', onChange: this.onChange, value: this.state.task }),
+	          React.createElement(
+	            'span',
+	            { className: 'input-group-btn' },
+	            React.createElement(
+	              'button',
+	              { className: 'btn btn-default', type: 'button' },
+	              'Add #' + (this.state.tasksList.length + 1)
+	            )
+	          )
+	        )
+	      ),
+	      React.createElement(TasksList, { tasksList: this.state.tasksList })
+	    );
+	  }
+	});
+
+	ReactDOM.render(React.createElement(Timer, null), document.getElementById('app'));
 
 /***/ },
 /* 1 */
