@@ -106,7 +106,7 @@ th > .glyphicon {
 .table > thead > tr.info > th,
 .table > thead > tr > td.info,
 .table > thead > tr > th.info {
-  background-color: rgba(141, 153, 174, 0.27);
+  background-color: rgba(141, 153, 174, 0.3);
 }
 
 .task-cell {
@@ -117,23 +117,24 @@ th > .glyphicon {
   font-weight: normal;
 }
 
+.text-muted a {
+  color: #8d99ae;
+}
+
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   height: 30px;
-}
-
-.text-muted {
   color: rgba(141, 153, 174, 0.4);
 }
 
-.text-muted a {
+.footer a {
   color: rgba(141, 153, 174, 0.4);
 }
 
 .text-muted a:hover {
-  color: rgba(141, 153, 174, 0.6);
+  color: rgba(141, 153, 174, 0.5);
 }
 
 /* Github corner */
