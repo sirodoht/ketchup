@@ -178,6 +178,16 @@ const Timer = React.createClass({
       audio.play()
     }
   },
+  componentDidUpdate: function() {
+    window.localStorage.setItem('ketchupTasks', JSON.stringify(this.state))
+  },
+  componentDidMount: function() {
+    const restoreStateString = window.localStorage.getItem('ketchupTasks')
+    if (restoreStateString) {
+      const restoreState = JSON.parse(restoreStateString)
+      this.setState(restoreState)
+    }
+  },
   render: function() {
     return (
       <div className="col-md-8 col-md-offset-2">
