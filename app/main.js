@@ -8,7 +8,7 @@ const TasksList = React.createClass({
       return (
         <tr key={item.id} className={item.current ? 'info' : null}>
           <th>{item.id + 1}</th>
-          <th>{item.task}</th>
+          <th className={item.task === 'Break' ? 'break' : null}>{item.task}</th>
           <th>{item.durationMins}:{item.durationSecs}</th>
         </tr>
       )
@@ -39,8 +39,8 @@ const Timer = React.createClass({
       timeRemainingSecs: '00',
       tasksList: [],
       task: '',
-      pomosN: 0,
-      breaksN: 0,
+      pomosNum: 0,
+      breaksNum: 0,
       pomosMins: 0,
       breaksMins: 0,
     }
@@ -60,6 +60,7 @@ const Timer = React.createClass({
         durationMins: 5,
         durationSecs: '00',
         current: false,
+        done: false,
         createdOn: Date.now(),
       },
       {
@@ -68,6 +69,7 @@ const Timer = React.createClass({
         durationMins: 25,
         durationSecs: '00',
         current: false,
+        done: false,
         createdOn: Date.now(),
       },
     ]
@@ -90,8 +92,10 @@ const Timer = React.createClass({
       return
     }
     const nextTask = find(this.state.tasksList, {id: currentTask.id + 1})
-    nextTask.current = true
     currentTask.current = false
+    nextTask.current = true
+    currentTask.done = true
+    nextTask.done = true
     const currentIndex = this.state.tasksList.indexOf(currentTask)
     const nextIndex = this.state.tasksList.indexOf(nextTask)
     const newTasksList = this.state.tasksList
@@ -102,18 +106,34 @@ const Timer = React.createClass({
       timeRemainingMins: nextTask.durationMins,
       timeRemainingSecs: nextTask.durationSecs,
     })
-    this.calcMetrics()
+    this.updateMetricsNum()
+    this.pause()
+    this.start()
   },
-  calcMetrics: function () {
-    const newPomosN = this.state.pomosN + 1
-    const newPomosMins = this.state.pomosMins + 25
-    const newBreaksN = this.state.breaksN + 1
-    const newBreaksMins = this.state.newBreaksMins + 5
+  updateMetricsNum: function () {
+    const newTask = find(this.state.tasksList, {current: true})
+    let newPomosNum = this.state.pomosNum
+    let newBreaksNum = this.state.breaksNum
+    if (newTask.task === 'Break') {
+      newPomosNum = this.state.pomosNum + 1
+    } else {
+      newBreaksNum = this.state.breaksNum + 1
+    }
     this.setState({
-      pomosN: newPomosN,
-      breaksN: newBreaksN,
+      pomosNum: newPomosNum,
+      breaksNum: newBreaksNum,
+    })
+  },
+  tickMinPomo: function() {
+    const newPomosMins = this.state.pomosMins + 1
+    this.setState({
       pomosMins: newPomosMins,
-      breaksMins: newBreaksMins,
+    })
+  },
+  tickMinBreak: function() {
+    const newBreakMins = this.state.breaksMins + 1
+    this.setState({
+      breaksMins: newBreakMins,
     })
   },
   tick: function() {
@@ -137,23 +157,19 @@ const Timer = React.createClass({
       timeRemainingMins: newTimeRemainingMins,
       timeRemainingSecs: newTimeRemainingSecs,
     })
-    this.calcMetrics()
   },
   start: function() {
-    this.interval = setInterval(this.tick, 1000)
+    this.intervalSec = setInterval(this.tick, 1000)
+    const currentTask = find(this.state.tasksList, {current: true})
+    if (!currentTask || currentTask.task !== 'Break') {
+      this.intervalMin = setInterval(this.tickMinPomo, 1000 * 60)
+    } else {
+      this.intervalMin = setInterval(this.tickMinBreak, 1000 * 60)
+    }
   },
   pause: function() {
-    clearInterval(this.interval)
-  },
-  componentDidUpdate: function() {
-    window.localStorage.setItem('ketchupTasks', this.state)
-  },
-  componentDidMount: function() {
-    const restoreData = window.localStorage.getItem('ketchupTasks')
-    // console.log('restoreData', restoreData)
-    if (restoreData) {
-      this.setState(restoreData)
-    }
+    clearInterval(this.intervalSec)
+    clearInterval(this.intervalMin)
   },
   render: function() {
     return (
@@ -161,13 +177,13 @@ const Timer = React.createClass({
         <div>
           <div className="time">{this.state.timeRemainingMins}:{this.state.timeRemainingSecs}</div>
           <div className="controls">
-            <button type="button" className="btn btn-default btn-lg" onClick={this.start}>
+            <button type="button" className="btn btn-default btn-sm" onClick={this.start}>
               <span className="glyphicon glyphicon-play" aria-hidden="true"></span> Start
             </button>
             <button type="button" className="btn btn-default btn-lg" onClick={this.next}>
               <span className="glyphicon glyphicon-check" aria-hidden="true"></span> Next
             </button>
-            <button type="button" className="btn btn-default btn-lg" onClick={this.pause}>
+            <button type="button" className="btn btn-default btn-sm" onClick={this.pause}>
               <span className="glyphicon glyphicon-pause" aria-hidden="true"></span> Pause
             </button>
           </div>
@@ -179,7 +195,7 @@ const Timer = React.createClass({
                 <div className="panel-heading">
                   <h3 className="panel-title">Pomodoros</h3>
                 </div>
-                <div className="panel-body">{this.state.pomosN}</div>
+                <div className="panel-body">{this.state.pomosNum}</div>
               </div>
             </div>
             <div className="col-sm-3">
@@ -203,7 +219,7 @@ const Timer = React.createClass({
                 <div className="panel-heading">
                   <h3 className="panel-title">Breaks</h3>
                 </div>
-                <div className="panel-body">{this.state.breaksN}</div>
+                <div className="panel-body">{this.state.breaksNum}</div>
               </div>
             </div>
           </div>
