@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom'
 import React from 'react'
-import { find } from 'lodash'
+import { find, filter } from 'lodash'
 
 const TasksList = React.createClass({
   render: function() {
@@ -53,11 +53,17 @@ const Timer = React.createClass({
     if (this.state.task === '') {
       return
     }
+    var breaks = filter(this.state.tasksList, {'task': 'Break'})
+    const runningBreaksNum = breaks.length + 1
+    let breakDurationMins = 5
+    if (runningBreaksNum >=4 && runningBreaksNum % 4 === 0) {
+      breakDurationMins = 15
+    }
     const newItemArray = [
       {
         id: this.state.tasksList.length + 1,
         task: 'Break',
-        durationMins: 5,
+        durationMins: breakDurationMins,
         durationSecs: '00',
         current: false,
         done: false,
