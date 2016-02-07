@@ -102,3 +102,7 @@ th > .glyphicon {
 .table > thead > tr > th.info {
   background-color: rgba(141, 153, 174, 0.27);
 }
+
+.break {
+  font-weight: normal;
+}
