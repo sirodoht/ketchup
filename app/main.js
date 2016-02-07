@@ -10,10 +10,6 @@ const TasksList = React.createClass({
           <th>{item.id + 1}</th>
           <th>{item.task}</th>
           <th>{item.durationMins}:{item.durationSecs}</th>
-          <th className="text-right">
-            <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-            <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
-          </th>
         </tr>
       )
     }
@@ -22,10 +18,9 @@ const TasksList = React.createClass({
         <table className="table table-stripped">
           <thead>
             <tr>
-              <th>#</th>
+              <th></th>
               <th>Task</th>
               <th>Duration</th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -44,6 +39,10 @@ const Timer = React.createClass({
       timeRemainingSecs: '00',
       tasksList: [],
       task: '',
+      pomosN: 0,
+      breaksN: 0,
+      pomosMins: 0,
+      breaksMins: 0,
     }
   },
   onChange: function(e) {
@@ -103,6 +102,19 @@ const Timer = React.createClass({
       timeRemainingMins: nextTask.durationMins,
       timeRemainingSecs: nextTask.durationSecs,
     })
+    this.calcMetrics()
+  },
+  calcMetrics: function () {
+    const newPomosN = this.state.pomosN + 1
+    const newPomosMins = this.state.pomosMins + 25
+    const newBreaksN = this.state.breaksN + 1
+    const newBreaksMins = this.state.newBreaksMins + 5
+    this.setState({
+      pomosN: newPomosN,
+      breaksN: newBreaksN,
+      pomosMins: newPomosMins,
+      breaksMins: newBreaksMins,
+    })
   },
   tick: function() {
     let newTimeRemainingMins
@@ -125,6 +137,7 @@ const Timer = React.createClass({
       timeRemainingMins: newTimeRemainingMins,
       timeRemainingSecs: newTimeRemainingSecs,
     })
+    this.calcMetrics()
   },
   start: function() {
     this.interval = setInterval(this.tick, 1000)
@@ -132,26 +145,31 @@ const Timer = React.createClass({
   pause: function() {
     clearInterval(this.interval)
   },
-  componentWillUnmount: function() {
-    clearInterval(this.interval)
-    window.sessionStorage.setItem('ketchupTasks', this.state)
+  componentDidUpdate: function() {
+    window.localStorage.setItem('ketchupTasks', this.state)
   },
   componentDidMount: function() {
-    const restoreData = window.sessionStorage.getItem('ketchupTasks')
-    console.log('restoreData', restoreData)
+    const restoreData = window.localStorage.getItem('ketchupTasks')
+    // console.log('restoreData', restoreData)
     if (restoreData) {
       this.setState(restoreData)
     }
   },
   render: function() {
     return (
-      <div>
+      <div className="col-md-8 col-md-offset-2">
         <div>
           <div className="time">{this.state.timeRemainingMins}:{this.state.timeRemainingSecs}</div>
           <div className="controls">
-            <button type="button" className="btn btn-default btn-lg" onClick={this.start}>Start</button>
-            <button type="button" className="btn btn-default btn-lg" onClick={this.pause}>Pause</button>
-            <button type="button" className="btn btn-default btn-lg" onClick={this.next}>Next</button>
+            <button type="button" className="btn btn-default btn-lg" onClick={this.start}>
+              <span className="glyphicon glyphicon-play" aria-hidden="true"></span> Start
+            </button>
+            <button type="button" className="btn btn-default btn-lg" onClick={this.next}>
+              <span className="glyphicon glyphicon-check" aria-hidden="true"></span> Next
+            </button>
+            <button type="button" className="btn btn-default btn-lg" onClick={this.pause}>
+              <span className="glyphicon glyphicon-pause" aria-hidden="true"></span> Pause
+            </button>
           </div>
         </div>
         <div className="summary">
@@ -161,9 +179,7 @@ const Timer = React.createClass({
                 <div className="panel-heading">
                   <h3 className="panel-title">Pomodoros</h3>
                 </div>
-                <div className="panel-body">
-                  2
-                </div>
+                <div className="panel-body">{this.state.pomosN}</div>
               </div>
             </div>
             <div className="col-sm-3">
@@ -171,9 +187,7 @@ const Timer = React.createClass({
                 <div className="panel-heading">
                   <h3 className="panel-title">Work time</h3>
                 </div>
-                <div className="panel-body">
-                  50:00
-                </div>
+                <div className="panel-body">{this.state.pomosMins}</div>
               </div>
             </div>
             <div className="col-sm-3">
@@ -181,9 +195,7 @@ const Timer = React.createClass({
                 <div className="panel-heading">
                   <h3 className="panel-title">Break time</h3>
                 </div>
-                <div className="panel-body">
-                  10:00
-                </div>
+                <div className="panel-body">{this.state.breaksMins}</div>
               </div>
             </div>
             <div className="col-sm-3">
@@ -191,9 +203,7 @@ const Timer = React.createClass({
                 <div className="panel-heading">
                   <h3 className="panel-title">Breaks</h3>
                 </div>
-                <div className="panel-body">
-                  1
-                </div>
+                <div className="panel-body">{this.state.breaksN}</div>
               </div>
             </div>
           </div>
