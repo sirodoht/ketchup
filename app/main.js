@@ -160,6 +160,7 @@ const Timer = React.createClass({
     this.listenForNorify()
   },
   start: function() {
+    clearInterval(this.intervalSec)
     this.intervalSec = setInterval(this.tick, 1000)
     const currentTask = find(this.state.tasksList, {current: true})
     if (!currentTask || currentTask.task !== 'Break') {
