@@ -23,6 +23,11 @@ body {
   margin-bottom: 15px;
 }
 
+.form-control:focus {
+  box-shadow: none;
+  border-color: #8d99ae;
+}
+
 .list {
   margin-top: 15px;
   margin-bottom: 15px;
