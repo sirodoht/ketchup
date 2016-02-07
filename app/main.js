@@ -9,7 +9,7 @@ const TasksList = React.createClass({
         <tr key={item.id} className={item.current ? 'info' : null}>
           <th>{item.id + 1}</th>
           <th>{item.task}</th>
-          <th>{item.duration}</th>
+          <th>{item.durationMins}:{item.durationSecs}</th>
           <th className="text-right">
             <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span>
             <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
@@ -40,10 +40,8 @@ const TasksList = React.createClass({
 const Timer = React.createClass({
   getInitialState: function() {
     return {
-      timeRemaining: {
-        mins: 25,
-        secs: '00',
-      },
+      timeRemainingMins: 25,
+      timeRemainingSecs: '00',
       tasksList: [],
       task: '',
     }
@@ -60,14 +58,16 @@ const Timer = React.createClass({
       {
         id: this.state.tasksList.length + 1,
         task: 'Break',
-        duration: '5:00',
+        durationMins: 5,
+        durationSecs: '00',
         current: false,
         createdOn: Date.now(),
       },
       {
         id: this.state.tasksList.length,
         task: this.state.task,
-        duration: '25:00',
+        durationMins: 25,
+        durationSecs: '00',
         current: false,
         createdOn: Date.now(),
       },
@@ -85,8 +85,11 @@ const Timer = React.createClass({
       this.start()
     }
   },
-  move: function() {
+  next: function() {
     const currentTask = find(this.state.tasksList, {current: true})
+    if ((currentTask.id + 1) === this.state.tasksList.length) {
+      return
+    }
     const nextTask = find(this.state.tasksList, {id: currentTask.id + 1})
     nextTask.current = true
     currentTask.current = false
@@ -97,39 +100,37 @@ const Timer = React.createClass({
     newTasksList[nextIndex].current = true
     this.setState({
       tasksList: newTasksList,
+      timeRemainingMins: nextTask.durationMins,
+      timeRemainingSecs: nextTask.durationSecs,
     })
   },
   tick: function() {
-    const newTimeRemaining = {}
-    if (this.state.timeRemaining.secs > 0) {
-      newTimeRemaining.mins = this.state.timeRemaining.mins
-      newTimeRemaining.secs = this.state.timeRemaining.secs -  1
-      if (newTimeRemaining.secs < 10) {
-        newTimeRemaining.secs = '0' + newTimeRemaining.secs
+    let newTimeRemainingMins
+    let newTimeRemainingSecs
+    if (this.state.timeRemainingSecs > 0) {
+      newTimeRemainingMins = this.state.timeRemainingMins
+      newTimeRemainingSecs = this.state.timeRemainingSecs -  1
+      if (newTimeRemainingSecs < 10) {
+        newTimeRemainingSecs = '0' + newTimeRemainingSecs
       }
     } else {
-      newTimeRemaining.mins = this.state.timeRemaining.mins - 1
-      if (this.state.timeRemaining.secs === 0 || this.state.timeRemaining.secs === '00') {
-        newTimeRemaining.secs = 59
+      newTimeRemainingMins = this.state.timeRemainingMins - 1
+      if (this.state.timeRemainingSecs === 0 || this.state.timeRemainingSecs === '00') {
+        newTimeRemainingSecs = 59
       } else {
-        newTimeRemaining.secs = this.state.timeRemaining.secs -  1
+        newTimeRemainingSecs = this.state.timeRemainingSecs -  1
       }
     }
-    this.setState({timeRemaining: newTimeRemaining})
+    this.setState({
+      timeRemainingMins: newTimeRemainingMins,
+      timeRemainingSecs: newTimeRemainingSecs,
+    })
   },
   start: function() {
     this.interval = setInterval(this.tick, 1000)
   },
   pause: function() {
     clearInterval(this.interval)
-  },
-  next: function() {
-    this.setState({
-      timeRemaining: {
-        mins: 25,
-        secs: '00',
-      },
-    })
   },
   componentWillUnmount: function() {
     clearInterval(this.interval)
@@ -138,11 +139,11 @@ const Timer = React.createClass({
     return (
       <div>
         <div>
-          <div className="time">{this.state.timeRemaining.mins}:{this.state.timeRemaining.secs}</div>
+          <div className="time">{this.state.timeRemainingMins}:{this.state.timeRemainingSecs}</div>
           <div className="controls">
             <button type="button" className="btn btn-default btn-lg" onClick={this.start}>Start</button>
             <button type="button" className="btn btn-default btn-lg" onClick={this.pause}>Pause</button>
-            <button type="button" className="btn btn-default btn-lg" onClick={this.move}>Next</button>
+            <button type="button" className="btn btn-default btn-lg" onClick={this.next}>Next</button>
           </div>
         </div>
         <div className="summary">
