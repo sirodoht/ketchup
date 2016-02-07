@@ -157,6 +157,7 @@ const Timer = React.createClass({
       timeRemainingMins: newTimeRemainingMins,
       timeRemainingSecs: newTimeRemainingSecs,
     })
+    this.listenForNorify()
   },
   start: function() {
     this.intervalSec = setInterval(this.tick, 1000)
@@ -170,6 +171,12 @@ const Timer = React.createClass({
   pause: function() {
     clearInterval(this.intervalSec)
     clearInterval(this.intervalMin)
+  },
+  listenForNorify: function() {
+    if (this.state.timeRemainingMins === 0 && this.state.timeRemainingSecs === '00') {
+      var audio = new Audio('assets/ding.ogg')
+      audio.play()
+    }
   },
   render: function() {
     return (
