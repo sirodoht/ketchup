@@ -10,6 +10,7 @@ Build with React with the help of webpack and babel.
 npm install -g webpack
 npm install
 webpack --progress --watch
+webpack -p  # for production build
 ```
 
 ## What is Pomodoro?
