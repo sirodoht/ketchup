@@ -9,7 +9,7 @@ const TasksList = React.createClass({
         <tr key={item.id} className={item.current ? 'info' : null}>
           <th>{item.id + 1}</th>
           <th className={item.task === 'Break' ? 'taskCell break' : 'task-cell'}>{item.task}</th>
-          <th>{item.durationMins}:{item.durationSecs}</th>
+          <th className="text-right">{item.durationMins}:{item.durationSecs}</th>
         </tr>
       )
     }
@@ -20,7 +20,7 @@ const TasksList = React.createClass({
             <tr>
               <th></th>
               <th>Task</th>
-              <th>Duration</th>
+              <th className="text-right">Duration</th>
             </tr>
           </thead>
           <tbody>
@@ -172,6 +172,10 @@ const Timer = React.createClass({
     clearInterval(this.intervalSec)
     clearInterval(this.intervalMin)
   },
+  resetTasks: function() {
+    this.setState(this.getInitialState())
+    window.localStorage.setItem('ketchupState', '')
+  },
   listenForNorify: function() {
     if (this.state.timeRemainingMins === 0 && this.state.timeRemainingSecs === '00') {
       var audio = new Audio('assets/ding.ogg')
@@ -179,10 +183,10 @@ const Timer = React.createClass({
     }
   },
   componentDidUpdate: function() {
-    window.localStorage.setItem('ketchupTasks', JSON.stringify(this.state))
+    window.localStorage.setItem('ketchupState', JSON.stringify(this.state))
   },
   componentDidMount: function() {
-    const restoreStateString = window.localStorage.getItem('ketchupTasks')
+    const restoreStateString = window.localStorage.getItem('ketchupState')
     if (restoreStateString) {
       const restoreState = JSON.parse(restoreStateString)
       this.setState(restoreState)
@@ -250,6 +254,11 @@ const Timer = React.createClass({
           </div>
         </form>
         <TasksList tasksList={this.state.tasksList} />
+        <div className="text-center">
+          <p className="text-muted">
+            <a href="#" onClick={this.resetTasks}>Reset tasks</a>
+          </p>
+        </div>
       </div>
     )
   },
