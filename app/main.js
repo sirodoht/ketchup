@@ -134,6 +134,14 @@ const Timer = React.createClass({
   },
   componentWillUnmount: function() {
     clearInterval(this.interval)
+    window.sessionStorage.setItem('ketchupTasks', this.state)
+  },
+  componentDidMount: function() {
+    const restoreData = window.sessionStorage.getItem('ketchupTasks')
+    console.log('restoreData', restoreData)
+    if (restoreData) {
+      this.setState(restoreData)
+    }
   },
   render: function() {
     return (
