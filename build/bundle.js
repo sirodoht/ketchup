@@ -149,7 +149,7 @@
 	    return {
 	      timeRemaining: {
 	        mins: 25,
-	        secs: 0
+	        secs: '00'
 	      },
 	      tasksList: [],
 	      task: ''
@@ -192,7 +192,7 @@
 	      }
 	    } else {
 	      newTimeRemaining.mins = this.state.timeRemaining.mins - 1;
-	      if (this.state.timeRemaining.secs === 0) {
+	      if (this.state.timeRemaining.secs === 0 || this.state.timeRemaining.secs === '00') {
 	        newTimeRemaining.secs = 59;
 	      } else {
 	        newTimeRemaining.secs = this.state.timeRemaining.secs - 1;
