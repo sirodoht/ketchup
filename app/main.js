@@ -1,7 +1,7 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
+import ReactDOM from 'react-dom'
+import React from 'react'
 
-// var Break = React.createClass({
+// const Break = React.createClass({
 //   render: function() {
 //     return (
 //       <tr>
@@ -11,13 +11,13 @@ var ReactDOM = require('react-dom');
 //         <th>Break</th>
 //         <th><span className="glyphicon glyphicon-trash" aria-hidden="true"></span></th>
 //       </tr>
-//     );
+//     )
 //   }
-// });
+// })
 
-var TasksList = React.createClass({
+const TasksList = React.createClass({
   render: function() {
-    var createItem = function(item) {
+    const createItem = function(item) {
       return (
         <tr key={item.id} className={item.current ? 'info' : null}>
           <th>{item.id}</th>
@@ -29,8 +29,8 @@ var TasksList = React.createClass({
             <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
           </th>
         </tr>
-      );
-    };
+      )
+    }
     return (
       <div className="list">
         <table className="table table-stripped">
@@ -48,78 +48,78 @@ var TasksList = React.createClass({
           </tbody>
         </table>
       </div>
-    );
-  }
-});
+    )
+  },
+})
 
-var Timer = React.createClass({
+const Timer = React.createClass({
   getInitialState: function() {
     return {
       timeRemaining: {
         mins: 25,
-        secs: '00'
+        secs: '00',
       },
       tasksList: [],
-      task: ''
-    };
+      task: '',
+    }
   },
   onChange: function(e) {
-    this.setState({task: e.target.value});
+    this.setState({task: e.target.value})
   },
   handleSubmit: function(e) {
-    e.preventDefault();
+    e.preventDefault()
     if (this.state.task === '') {
-      return;
+      return
     }
     if (this.state.tasksList[0]) {
-      this.state.tasksList[0].current = false;
+      this.state.tasksList[0].current = false
     }
-    var newItemArray = [{
+    const newItemArray = [{
       id: this.state.tasksList.length + 1,
       task: this.state.task,
       current: true,
-      createdOn: Date.now()
-    }];
-    var nextItems = newItemArray.concat(this.state.tasksList);
-    var nextText = '';
+      createdOn: Date.now(),
+    }]
+    const nextItems = newItemArray.concat(this.state.tasksList)
+    const nextText = ''
     this.setState({
       tasksList: nextItems,
-      task: nextText
-    });
+      task: nextText,
+    })
     if (this.state.tasksList.length === 0) {
-      this.start();
+      this.start()
     }
   },
   tick: function() {
-    let newTimeRemaining = {};
+    const newTimeRemaining = {}
     if (this.state.timeRemaining.secs > 0) {
-      newTimeRemaining.mins = this.state.timeRemaining.mins;
-      newTimeRemaining.secs = this.state.timeRemaining.secs -  1;
+      newTimeRemaining.mins = this.state.timeRemaining.mins
+      newTimeRemaining.secs = this.state.timeRemaining.secs -  1
       if (newTimeRemaining.secs < 10) {
-        newTimeRemaining.secs = '0' + newTimeRemaining.secs;
+        newTimeRemaining.secs = '0' + newTimeRemaining.secs
       }
     } else {
-      newTimeRemaining.mins = this.state.timeRemaining.mins - 1;
+      newTimeRemaining.mins = this.state.timeRemaining.mins - 1
       if (this.state.timeRemaining.secs === 0 || this.state.timeRemaining.secs === '00') {
-        newTimeRemaining.secs = 59;
+        newTimeRemaining.secs = 59
       } else {
-        newTimeRemaining.secs = this.state.timeRemaining.secs -  1;
+        newTimeRemaining.secs = this.state.timeRemaining.secs -  1
       }
     }
-    this.setState({timeRemaining: newTimeRemaining});
+    this.setState({timeRemaining: newTimeRemaining})
   },
   start: function() {
-    this.interval = setInterval(this.tick, 1000);
+    this.interval = setInterval(this.tick, 1000)
   },
   pause: function() {
-    clearInterval(this.interval);
+    clearInterval(this.interval)
   },
   next: function() {
-    clearInterval(this.interval);
-    this.setState({timeRemaining: 1500});
+    clearInterval(this.interval)
+    this.setState({timeRemaining: 1500})
   },
   componentWillUnmount: function() {
-    clearInterval(this.interval);
+    clearInterval(this.interval)
   },
   render: function() {
     return (
@@ -186,8 +186,8 @@ var Timer = React.createClass({
         </form>
         <TasksList tasksList={this.state.tasksList} />
       </div>
-    );
-  }
-});
+    )
+  },
+})
 
-ReactDOM.render(<Timer />, document.getElementById('app'));
+ReactDOM.render(<Timer />, document.getElementById('app'))

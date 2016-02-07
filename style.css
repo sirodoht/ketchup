@@ -41,3 +41,7 @@ body {
 .table{
   color: #2b2d42;
 }
+
+th > .glyphicon {
+  margin-left: 10px;
+}
