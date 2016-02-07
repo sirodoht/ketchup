@@ -1,20 +1,6 @@
 import ReactDOM from 'react-dom'
 import React from 'react'
 
-// const Break = React.createClass({
-//   render: function() {
-//     return (
-//       <tr>
-//         <th>*</th>
-//         <th>Break</th>
-//         <th>5:00</th>
-//         <th>Break</th>
-//         <th><span className="glyphicon glyphicon-trash" aria-hidden="true"></span></th>
-//       </tr>
-//     )
-//   }
-// })
-
 const TasksList = React.createClass({
   render: function() {
     const createItem = function(item) {
