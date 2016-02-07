@@ -23,6 +23,15 @@ webpack --progress --watch
 
 https://coolors.co/app/2b2d42-8d99ae-edf2f4-ef233c-d90429
 
+## Todo
+
+* Desktop notifications
+* Make pause button to resume when clicked
+* More info about pomodoro
+* Modularize code
+* Edit task
+* Testing?
+
 ## License
 
 MIT
