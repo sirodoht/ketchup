@@ -8,7 +8,7 @@ const TasksList = React.createClass({
       return (
         <tr key={item.id} className={item.current ? 'info' : null}>
           <th>{item.id + 1}</th>
-          <th className={item.task === 'Break' ? 'break' : null}>{item.task}</th>
+          <th className={item.task === 'Break' ? 'taskCell break' : 'task-cell'}>{item.task}</th>
           <th>{item.durationMins}:{item.durationSecs}</th>
         </tr>
       )
