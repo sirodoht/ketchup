@@ -8,10 +8,10 @@ Saves data on Local Storage.
 ## Setup
 
 ```sh
-npm install -g webpack
 npm install
-webpack --progress --watch
-webpack -p  # for production build
+npm start  # watch files and auto webpack build
+npm run build  # webpack build
+npm run prod  # webpack -p (production build)
 ```
 
 ## What is Pomodoro?
