@@ -3,6 +3,7 @@
 > A pomodoro technique timer
 
 Build with React with the help of webpack and babel.
+Saves data on Local Storage.
 
 ## Setup
 
@@ -26,12 +27,19 @@ https://coolors.co/app/2b2d42-8d99ae-edf2f4-ef233c-d90429
 
 ## Todo
 
+* Edit task
+* Fix alarm sound
+* Tooltips for help
+  * http://www.tippedjs.com/
+  * http://iamceege.github.io/tooltipster/
+  * http://www.opentip.org/
+  * https://github.com/react-component/tooltip
+  * http://getbootstrap.com/javascript/#tooltips
+  * More info about pomodoro
+* Logo
 * Desktop notifications
 * Make pause button to resume when clicked
-* More info about pomodoro
-* Modularize code
-* Edit task
-* Testing?
+* Tasks export
 
 ## License
 
