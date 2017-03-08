@@ -179,6 +179,13 @@ const Timer = React.createClass({
     clearInterval(this.intervalSec)
     clearInterval(this.intervalMin)
   },
+  togl: function() {
+    if(!this.start) {
+        this.start
+    }else{
+        this.pause
+    }
+  },
   resetTasks: function() {
     this.setState(this.getInitialState())
     window.localStorage.setItem('ketchupState', '')
@@ -211,7 +218,7 @@ const Timer = React.createClass({
             <button type="button" className="btn btn-default btn-lg" onClick={this.next}>
               <span className="glyphicon glyphicon-check" aria-hidden="true"></span> Next
             </button>
-            <button type="button" className="btn btn-default btn-sm" onClick={this.pause}>
+            <button type="button" className="btn btn-default btn-sm" onClick={this.togl}>
               <span className="glyphicon glyphicon-pause" aria-hidden="true"></span> Pause
             </button>
           </div>
