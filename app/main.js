@@ -170,7 +170,6 @@ const Timer = React.createClass({
     currentTask.paused = false
     clearInterval(this.intervalSec)
     this.intervalSec = setInterval(this.tick, 1000)
-    const currentTask = find(this.state.tasksList, {current: true})
     if (!currentTask || currentTask.task !== 'Break') {
       this.intervalMin = setInterval(this.tickMinPomo, 1000 * 60)
     } else {
