@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Timer from './Timer.comp';
+import './global.css';
 
-import './style.css';
+import Timer from './Timer.comp';
 
 ReactDOM.render(<Timer />, document.getElementById('app'));
