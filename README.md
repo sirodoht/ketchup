@@ -11,7 +11,6 @@ Saves data on Local Storage.
 npm install
 npm start  # watch files and auto webpack build
 npm run build  # webpack build
-npm run prod  # webpack -p (production build)
 ```
 
 ## What is Pomodoro?
@@ -24,22 +23,6 @@ npm run prod  # webpack -p (production build)
 ## Palette
 
 https://coolors.co/app/2b2d42-8d99ae-edf2f4-ef233c-d90429
-
-## Todo
-
-* Edit task
-* Fix alarm sound
-* Tooltips for help
-  * http://www.tippedjs.com/
-  * http://iamceege.github.io/tooltipster/
-  * http://www.opentip.org/
-  * https://github.com/react-component/tooltip
-  * http://getbootstrap.com/javascript/#tooltips
-  * More info about pomodoro
-* Logo
-* Desktop notifications
-* Make pause button to resume when clicked
-* Tasks export
 
 ## License
 
