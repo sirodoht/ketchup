@@ -1,0 +1,53 @@
+.time {
+  font-size: 96px;
+}
+
+.controls {
+  margin-top: 15px;
+  margin-bottom: 35px;
+}
+
+.controls > button {
+  margin-left: 15px;
+  margin-right: 15px;
+  border-color: #8d99ae;
+  background: transparent;
+}
+
+.input-group-btn > .btn-default {
+  background-color: transparent;
+}
+
+.summary {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.form-control {
+  box-shadow: none;
+  transition: none;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: #8d99ae;
+}
+
+.panel-info > .panel-heading {
+  background-color: #8d99ae;
+  color: #fff;
+  border: none;
+}
+
+.panel {
+  border-color: #8d99ae;
+  background: transparent;
+}
+
+.panel-body {
+  font-size: 16px;
+}
+
+input[type=text] {
+  background: rgba(237, 242, 244, 0.5)
+}
