@@ -43,6 +43,7 @@ const Timer = React.createClass({
       breaksNum: 0,
       pomosMins: 0,
       breaksMins: 0,
+      clockRunning: false,
     }
   },
   onChange: function(e) {
@@ -166,28 +167,30 @@ const Timer = React.createClass({
     this.listenForNotify()
   },
   start: function() {
-    const currentTask = find(this.state.tasksList, {current: true})
-    currentTask.paused = false
     clearInterval(this.intervalSec)
     this.intervalSec = setInterval(this.tick, 1000)
+    const currentTask = find(this.state.tasksList, {current: true})
     if (!currentTask || currentTask.task !== 'Break') {
       this.intervalMin = setInterval(this.tickMinPomo, 1000 * 60)
     } else {
       this.intervalMin = setInterval(this.tickMinBreak, 1000 * 60)
     }
+    this.setState({
+      clockRunning: true,
+    });
   },
   pause: function() {
-    const currentTask = find(this.state.tasksList, {current: true})
-    currentTask.paused = true
     clearInterval(this.intervalSec)
     clearInterval(this.intervalMin)
+    this.setState({
+      clockRunning: false,
+    });
   },
   togl: function() {
-    const currentTask = find(this.state.tasksList, {current: true})
-    if(currentTask.paused = true) {
-        this.start()
-    }else{
-        this.pause()
+    if (this.state.clockRunning) {
+      this.pause()
+    } else {
+      this.start()
     }
   },
   resetTasks: function() {
