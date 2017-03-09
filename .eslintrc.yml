@@ -1,0 +1,31 @@
+env:
+  es6: true
+  browser: true
+  node: true
+parserOptions:
+  sourceType: module
+  ecmaFeatures:
+    jsx: true
+extends:
+  - eslint:recommended
+  - plugin:react/recommended
+rules:
+  indent:
+    - error
+    - 2
+    - SwitchCase: 1
+  linebreak-style:
+    - error
+    - unix
+  quotes:
+    - error
+    - single
+  semi:
+    - error
+    - always
+  camelcase:
+    - 2
+  no-console:
+    - 0
+plugins:
+  - react
