@@ -166,7 +166,8 @@ const Timer = React.createClass({
     this.listenForNotify()
   },
   start: function() {
-    currentTask.paused === 'false'
+    const currentTask = find(this.state.tasksList, {current: true})
+    currentTask.paused = false
     clearInterval(this.intervalSec)
     this.intervalSec = setInterval(this.tick, 1000)
     const currentTask = find(this.state.tasksList, {current: true})
@@ -177,12 +178,14 @@ const Timer = React.createClass({
     }
   },
   pause: function() {
+    const currentTask = find(this.state.tasksList, {current: true})
     currentTask.paused = true
     clearInterval(this.intervalSec)
     clearInterval(this.intervalMin)
   },
   togl: function() {
-    if(currentTask.paused === 'true') {
+    const currentTask = find(this.state.tasksList, {current: true})
+    if(currentTask.paused = true) {
         this.start()
     }else{
         this.pause()
