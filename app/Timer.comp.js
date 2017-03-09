@@ -3,6 +3,8 @@ import { find, filter } from 'lodash';
 
 import TasksList from './TasksList.comp';
 
+import './Timer.css';
+
 export default class Timer extends React.Component {
   constructor(props) {
     super(props);
@@ -193,14 +195,11 @@ export default class Timer extends React.Component {
         <div>
           <div className="time">{this.state.timeRemainingMins}:{this.state.timeRemainingSecs}</div>
           <div className="controls">
-            <button type="button" className="btn btn-default btn-sm" onClick={this.start}>
-              <span className="glyphicon glyphicon-play" aria-hidden="true"></span> Start
+            <button type="button" className="btn btn-default btn-sm" onClick={this.pause}>
+              Start / Pause
             </button>
             <button type="button" className="btn btn-default btn-lg" onClick={this.next}>
-              <span className="glyphicon glyphicon-check" aria-hidden="true"></span> Next
-            </button>
-            <button type="button" className="btn btn-default btn-sm" onClick={this.pause}>
-              <span className="glyphicon glyphicon-pause" aria-hidden="true"></span> Pause
+              Next
             </button>
           </div>
         </div>
