@@ -1,17 +1,37 @@
-var path = require('path');
-
 module.exports = {
-  entry: path.resolve(__dirname, 'app/main.js'),
+  entry: ['bootstrap-loader', './app/app.js'],
   output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: 'bundle.js'
+    path: './build',
+    filename: 'bundle.js',
+  },
+  devtool: 'source-map',
+  performance: {
+    hints: 'warning',
   },
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.js$/,
+        enforce: 'pre',
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+        options: {
+          emitErrors: true,
+          failOnError: true,
+        },
+      },
+      {
+        test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
+        query: {
+          presets: ['es2015', 'react']
+        },
+      },
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        loader: 'style-loader!css-loader',
       },
     ],
   },
