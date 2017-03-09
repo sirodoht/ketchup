@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './TasksList.css';
+
 /**
  * TasksList component.
  */
