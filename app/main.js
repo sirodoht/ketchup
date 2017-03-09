@@ -163,7 +163,7 @@ const Timer = React.createClass({
       timeRemainingMins: newTimeRemainingMins,
       timeRemainingSecs: newTimeRemainingSecs,
     })
-    this.listenForNorify()
+    this.listenForNotify()
   },
   start: function() {
     currentTask.paused === 'false'
@@ -192,7 +192,7 @@ const Timer = React.createClass({
     this.setState(this.getInitialState())
     window.localStorage.setItem('ketchupState', '')
   },
-  listenForNorify: function() {
+  listenForNotify: function() {
     if (this.state.timeRemainingMins === 0 && this.state.timeRemainingSecs === '00') {
       var audio = new Audio('assets/ding.ogg')
       audio.play()
