@@ -163,9 +163,11 @@ const Timer = React.createClass({
       timeRemainingMins: newTimeRemainingMins,
       timeRemainingSecs: newTimeRemainingSecs,
     })
-    this.listenForNorify()
+    this.listenForNotify()
   },
   start: function() {
+    const currentTask = find(this.state.tasksList, {current: true})
+    currentTask.paused = false
     clearInterval(this.intervalSec)
     this.intervalSec = setInterval(this.tick, 1000)
     const currentTask = find(this.state.tasksList, {current: true})
@@ -176,14 +178,24 @@ const Timer = React.createClass({
     }
   },
   pause: function() {
+    const currentTask = find(this.state.tasksList, {current: true})
+    currentTask.paused = true
     clearInterval(this.intervalSec)
     clearInterval(this.intervalMin)
+  },
+  togl: function() {
+    const currentTask = find(this.state.tasksList, {current: true})
+    if(currentTask.paused = true) {
+        this.start()
+    }else{
+        this.pause()
+    }
   },
   resetTasks: function() {
     this.setState(this.getInitialState())
     window.localStorage.setItem('ketchupState', '')
   },
-  listenForNorify: function() {
+  listenForNotify: function() {
     if (this.state.timeRemainingMins === 0 && this.state.timeRemainingSecs === '00') {
       var audio = new Audio('assets/ding.ogg')
       audio.play()
@@ -211,7 +223,7 @@ const Timer = React.createClass({
             <button type="button" className="btn btn-default btn-lg" onClick={this.next}>
               <span className="glyphicon glyphicon-check" aria-hidden="true"></span> Next
             </button>
-            <button type="button" className="btn btn-default btn-sm" onClick={this.pause}>
+            <button type="button" className="btn btn-default btn-sm" onClick={this.togl}>
               <span className="glyphicon glyphicon-pause" aria-hidden="true"></span> Pause
             </button>
           </div>
